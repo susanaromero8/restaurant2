@@ -1,52 +1,145 @@
-import { useState } from 'react';
-import Nav from './Nav';
-import Principal from './Principal';
-import Banner from './Banner';
-import Button from './Button';
-import BestSellers from './BestSellers';
-import Category from './Category';
-import Properties from './Properties';
-import './App.css';
-
-
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
+import BestSellersPage from "./pages/BestSellersPage";
+import CategoryPage from "./pages/CategoryPage";
+import ContactPage from "./pages/ContactPage";
+import AboutPage from "./pages/AboutPage";
+import ProductPage from "./pages/ProductPage";
+import ProductHome from "./pages/ProductHome";
+import Footer from "./Footer";
+import { useState } from "react";
+import CartPage from "./pages/CartPage";
+import SearchPage from "./pages/SearchPage";
 
 function App() {
+  const [cartItems, setCartItems] = useState([]);
+  const [isOpen, setIsOpen] = useState(false);
+  const addToCart = (product) => {
+    console.log(product);
+    setCartItems((prev) => {
+      const existingProduct = prev.find(
+        (item) => item.tittle === product.tittle
+      );
+      console.log("Product", existingProduct);
+      if (!existingProduct) {
+        return [...prev, product];
+      }
+
+      return prev.map((item) =>
+        item.tittle === product.tittle
+          ? {
+              ...item,
+              value: item.value + product.value,
+            }
+          : item
+      );
+    });
+  };
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
     <>
-      <div className="bg-[url('/public/backgroundmovil.png')] md:bg-[url('/public/banner.png')] bg-cover h-full md:h-screen flex flex-col">
-        <Nav />
+      <BrowserRouter>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <Home
+                addToCart={addToCart}
+                cartItems={cartItems}
+                isOpen={isOpen}
+                setIsOpen={setIsOpen}
+                toggleMenu={toggleMenu}
+              />
+            }
+          />
 
-        <Principal />    
-      </div>
-      <Banner text="Disfruta" subtext="de nuestro buen rollo">
-        <div className="btn-contain w-48 h-12">
-          <Button description="ORDER NOW" className="bg-[#008BBF] hover:bg-[#00c4ff]" />
-        </div>
-      </Banner>
-
-      <BestSellers />
-
-      <Category />
-
-      <Banner text="Connect" subtext="with us">
-        <div className="btn-contain h-full flex gap-6">
-          <div className="bg-yellow-500 rounded-full w-20 h-20 flex items-center justify-center transition duration-150 ease-out hover:ease-in
-          hover:scale-110 cursor-pointer">
-            <div className="icon-[ph--instagram-logo-bold] w-20 h-10 "></div>
-          </div>
-          <div className="bg-yellow-500 rounded-full w-20 h-20 flex items-center justify-center transition duration-150 ease-out hover:ease-in
-          hover:scale-110 cursor-pointer">
-              <div className="icon-[ph--facebook-logo-bold] w-20 h-10"></div>
-          </div>
-          <div className="bg-yellow-500 rounded-full w-20 h-20 flex items-center justify-center transition duration-150 ease-out hover:ease-in
-          hover:scale-110 cursor-pointer">
-            <div className="icon-[bi--twitter-x] w-20 h-7"></div>
-          </div>
-        </div>
-      </Banner>
-
-      <Properties />
-
+          <Route path="/product" element={<ProductHome />} />
+          <Route
+            path="/product/:id"
+            element={
+              <ProductPage
+                addToCart={addToCart}
+                cartItems={cartItems}
+                isOpen={isOpen}
+                setIsOpen={setIsOpen}
+                toggleMenu={toggleMenu}
+              />
+            }
+          />
+          <Route
+            path="/best-seller"
+            element={
+              <BestSellersPage
+                addToCart={addToCart}
+                cartItems={cartItems}
+                isOpen={isOpen}
+                setIsOpen={setIsOpen}
+                toggleMenu={toggleMenu}
+              />
+            }
+          />
+          <Route
+            path="/category/:id"
+            element={
+              <CategoryPage
+                addToCart={addToCart}
+                cartItems={cartItems}
+                isOpen={isOpen}
+                setIsOpen={setIsOpen}
+                toggleMenu={toggleMenu}
+              />
+            }
+          />
+          <Route
+            path="/about"
+            element={
+              <AboutPage
+                cartItems={cartItems}
+                isOpen={isOpen}
+                setIsOpen={setIsOpen}
+                toggleMenu={toggleMenu}
+              />
+            }
+          />
+          <Route
+            path="/contact"
+            element={
+              <ContactPage
+                cartItems={cartItems}
+                isOpen={isOpen}
+                setIsOpen={setIsOpen}
+                toggleMenu={toggleMenu}
+              />
+            }
+          />
+          <Route
+            path="/cart"
+            element={
+              <CartPage
+                cartItems={cartItems}
+                isOpen={isOpen}
+                setIsOpen={setIsOpen}
+                toggleMenu={toggleMenu}
+              />
+            }
+          />
+          <Route
+            path="/search"
+            element={
+              <SearchPage
+                cartItems={cartItems}
+                isOpen={isOpen}
+                setIsOpen={setIsOpen}
+                toggleMenu={toggleMenu}
+              />
+            }
+          />
+        </Routes>
+      </BrowserRouter>
+      <Footer />
     </>
   );
 }

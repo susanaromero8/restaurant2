@@ -1,25 +1,87 @@
-function Card({tittle, price, image, alt, style}) {
+import { useState } from "react";
+import Modal from "./Modal";
+import Product from "./Product";
+import { Link } from "react-router-dom";
 
-	return(
-		<>
-			<div className="card-contain">
-	            <div className="card">
-	              <div className="product text-center">
-	                <div className="product-image max-w-80 h-full max-h-80 p-10 py-20 rounded-lg transition duration-150 ease-out hover:ease-in
-					hover:scale-110 cursor-pointer" style={style}>
-	                  <img src={image} alt={alt} className=" w-60 max-h-32" />
-	                </div>
-	                <div className="product-info p-6">
-		                <h2 className="product-tittle lg:text-xl p-2">{tittle}</h2>
-		                <p className="product-price">{price}$</p>
-	                </div>
-	              </div>
-	            </div>
-          	</div>
-		</>
+function Card({
+  ProductList,
+  tittle,
+  id,
+  price,
+  image,
+  alt,
+  style,
+  openModal,
+  isOpenModal,
+  closeModal,
+  addToCart,
+  setIsOpen,
+}) {
+  const [showButton, setShowButton] = useState(false);
 
+  const handleMouseEnter = () => {
+    setShowButton(true);
+  };
 
-		);
+  const handleMouseLeave = () => {
+    setShowButton(false);
+  };
+
+  return (
+    <>
+      <div
+        className="card-contain"
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
+        <div className="card">
+          <div className="product text-center">
+            <div
+              className={`product-image max-w-80 h-full max-h-80 p-10 py-20 rounded-lg 
+						cursor-pointer flex items-center justify-center relative overflow-hidden
+						${showButton && "transition-opacity duration-500 group "}`}
+              style={style}
+            >
+              <img src={image} alt={alt} className=" w-60 max-h-32" />
+              {showButton && (
+                <button
+                  className="flex absolute
+							items-center justify-center bg-gray-500 w-40 
+							border-1 rounded p-2 group-hover:opacity-100 text-lg"
+                  onClick={openModal}
+                >
+                  Quick view
+                </button>
+              )}
+            </div>
+            <div className="product-info p-6">
+              <Link
+                className="product-tittle lg:text-xl p-2 font-arco"
+                to={`/product/${id}`}
+              >
+                {tittle}
+              </Link>
+              <p className="product-price">{price}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <Modal isOpen={isOpenModal} closeModal={closeModal}>
+        <div className="">
+          <Product
+            ProductList={ProductList}
+            tittle={tittle}
+            price={price}
+            image={image}
+            alt={alt}
+            addToCart={addToCart}
+            setIsOpen={setIsOpen}
+            modal
+          />
+        </div>
+      </Modal>
+    </>
+  );
 }
 
 export default Card;
