@@ -1,37 +1,11 @@
-import Header from "../components/Header";
+import { useSearch } from "../hooks/useSearch";
 import Card from "../components/Card";
 import Button from "../components/Button";
 
-const SearchPage = ({
-  cartItems,
-  isOpen,
-  setIsOpen,
-  toggleMenu,
-  isOpenCart,
-  setIsOpenCart,
-  toggleMenuCart,
-  searchChange,
-  filteredSearch,
-  addToCart,
-  qualityTotal,
-  onQualityTotal,
-  addToWishList,
-  wishList,
-}) => {
+const SearchPage = () => {
+  const { onSearchChange, filteredSearch } = useSearch();
   return (
     <>
-      <Header
-        bg="bg-[#FF5C14]"
-        p="p-2"
-        cartItems={cartItems}
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-        toggleMenu={toggleMenu}
-        isOpenCart={isOpenCart}
-        setIsOpenCart={setIsOpenCart}
-        toggleMenuCart={toggleMenuCart}
-        qualityTotal={qualityTotal}
-      />
       <div className="p-10 flex flex-col items-center justify-center ">
         <h1 className="text-center md:text-4xl text-3xl font-bold lg:m-6">
           Search Page
@@ -40,7 +14,7 @@ const SearchPage = ({
           <input
             type="search"
             className="text-black p-2 "
-            onChange={searchChange}
+            onChange={onSearchChange}
           />
 
           <Button
@@ -52,18 +26,13 @@ const SearchPage = ({
           {filteredSearch.map((product) => (
             <Card
               key={product.id}
-              tittle={product.plate_pd}
+              title={product.plate_pd}
               price={product.price_pd}
               stock={product.stock_pd}
-              image={`http://localhost:4000/${product.img_pd}`}
+              image={product.img_pd}
               alt={product.plate_pd}
               id={product.id}
               style={{ backgroundColor: "#008BBF" }}
-              addToCart={addToCart}
-              addToWishList={addToWishList}
-              wishList={wishList}
-              setIsOpen={setIsOpen}
-              onQualityTotal={onQualityTotal}
             />
           ))}
           {filteredSearch.length === 0 && (

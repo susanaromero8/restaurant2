@@ -1,30 +1,8 @@
 import About from "../components/About";
-import Header from "../components/Header";
 
-const AboutPage = ({
-  cartItems,
-  isOpen,
-  setIsOpen,
-  toggleMenu,
-  isOpenCart,
-  setIsOpenCart,
-  toggleMenuCart,
-  qualityTotal,
-}) => {
+const AboutPage = () => {
   return (
     <>
-      <Header
-        bg="bg-[#FF5C14]"
-        p="p-2"
-        cartItems={cartItems}
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-        toggleMenu={toggleMenu}
-        isOpenCart={isOpenCart}
-        setIsOpenCart={setIsOpenCart}
-        toggleMenuCart={toggleMenuCart}
-        qualityTotal={qualityTotal}
-      />
       <div className="tittle-contain text-center m-10 lg:m-20 text-4xl">
         <h2>About</h2>
       </div>

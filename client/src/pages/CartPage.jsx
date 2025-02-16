@@ -1,25 +1,15 @@
-import React, { useEffect, useState } from "react";
-import Header from "../components/Header";
+import { useContext } from "react";
 import Button from "../components/Button";
 import { Link } from "react-router-dom";
+import CartContext from "../context/CartContext";
 
-const CartPage = ({
-  cartItems,
-  isOpen,
-  setIsOpen,
-  toggleMenu,
-  isOpenCart,
-  setIsOpenCart,
-  toggleMenuCart,
-  qualityTotal,
-  setCartItems,
-}) => {
+const CartPage = () => {
+  const { cartItems, setCartItems } = useContext(CartContext);
   const total = cartItems.reduce(
     (accumulator, item) =>
       accumulator + parseInt(item.price) * parseInt(item.value),
     0
   );
-  console.log(cartItems);
 
   const handleDelete = (id) => {
     setCartItems((prev) => prev.filter((item) => item.id !== id));
@@ -63,52 +53,40 @@ const CartPage = ({
 
   return (
     <>
-      <Header
-        bg="bg-[#FF5C14]"
-        p="p-2"
-        cartItems={cartItems}
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-        toggleMenu={toggleMenu}
-        isOpenCart={isOpenCart}
-        setIsOpenCart={setIsOpenCart}
-        toggleMenuCart={toggleMenuCart}
-        qualityTotal={qualityTotal}
-      />
       <div className="p-10 flex flex-col items-center justify-center ">
         <h1 className="text-center md:text-4xl text-3xl font-bold lg:m-6">
           Cart
         </h1>
         {cartItems.length > 0 ? (
-          <div className="grid grid-cols-[1/2] w-full lg:px-28 py-10 gap-2">
-            <div className="hidden md:none md:grid  md:grid-cols-6 font-bold">
+          <div className="md:grid w-full lg:px-28 my-10 gap-2">
+            <div className="hidden md:none md:grid  md:grid-cols-6 font-bold p-2">
               <h3 className="col-span-3">Product</h3>
-              <h3 className="text-center">Quantity</h3>
-              <h3 className="text-center">Total</h3>
+              <h3 className="text-center w-40">Quantity</h3>
+              <h3 className="text-end">Total</h3>
               <h3 className="text-center">Delete</h3>
             </div>
             <hr className="bg-gray-500 text-slate-400" />
             {cartItems.map((item) => (
-              <div className="grid grid-cols-[1/2]" key={item.id}>
-                <div className="grid md:grid-cols-6 items-center w-full py-6">
-                  <div className="nombre flex flex-col md:flex-row items-center gap-2 md:gap-6 md:col-span-2">
+              <div className="" key={item.id}>
+                <div className="md:grid md:grid-cols-6 items-center w-3/4 h-80 md:h-20 md:w-full my-6 justify-center">
+                  <div className="nombre flex flex-col w-auto h-32 md:h-20 md:flex-row justify-center items-center md:gap-6 md:col-span-2">
                     <img
                       src={item.image}
-                      alt={item.tittle}
-                      className=" w-36 md:w-20 lg:w-36 h-full"
+                      alt={item.title}
+                      className=" w-full h-full"
                     />
-                    <div className="description">
+                    <div className="description w-full">
                       <Link to={`/product/${item.id}`}>
-                        <h2 className="text-lg">{item.tittle}</h2>
+                        <h2 className="text-lg">{item.title}</h2>
                       </Link>
                     </div>
                   </div>
-                  <div className="md:flex md:justify-between md:items-center my-3 col-span-4">
-                    <p className="product-price text-lg col-span-1">
-                      {item.price}
+                  <div className="md:grid md:grid-flow-col md:items-center md:col-span-4 gap-6">
+                    <p className="product-price text-lg col-span-1 h-20 w-20 flex items-center justify-center">
+                      {item.price} $
                     </p>
                     <div className="Cantidad text-center col-span-1">
-                      <div className="button-contain flex">
+                      <div className="button-contain flex w-full h-auto">
                         <button
                           onClick={() => handleMenos(item.id)}
                           className="border p-2 w-8 bg-white text-gray-500 border-gray-300"
@@ -133,12 +111,12 @@ const CartPage = ({
                         </button>
                       </div>
                     </div>
-                    <div className="precio text-center">
+                    <div className="precio text-center col-span-1">
                       <p className="product-total text-lg">
                         {parseInt(item.price) * parseInt(item.value)}$
                       </p>
                     </div>
-                    <div className="delete text-center flex items-center justify-center">
+                    <div className="delete text-center flex items-center justify-center col-span-1">
                       <div className="btn-contain w-12 h-12 flex items-center justify-center">
                         <button
                           onClick={() => handleDelete(item.id)}

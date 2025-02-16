@@ -1,22 +1,11 @@
-import Button from "./Button";
+import { useModalMenu } from "../hooks/useModalMenu";
 import ListMenu from "./ListMenu";
 import Nav from "./Nav";
 import logo from "/g658.png";
 import logoSimple from "/logosimple.png";
 
-const Header = ({
-  bg,
-  p,
-  mp,
-  cartItems,
-  setIsOpen,
-  isOpen,
-  toggleMenu,
-  setIsOpenCart,
-  isOpenCart,
-  toggleMenuCart,
-  qualityTotal,
-}) => {
+const Header = ({ bg, p, mp }) => {
+  const { isOpen, toggleMenu } = useModalMenu();
   return (
     <>
       <nav
@@ -72,13 +61,7 @@ const Header = ({
           />
         </div>
 
-        <Nav
-          cartItems={cartItems}
-          isOpenCart={isOpenCart}
-          setIsOpenCart={setIsOpenCart}
-          toggleMenuCart={toggleMenuCart}
-          qualityTotal={qualityTotal}
-        />
+        <Nav />
       </nav>
 
       {isOpen && (

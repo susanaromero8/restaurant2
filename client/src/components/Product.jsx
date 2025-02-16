@@ -1,28 +1,19 @@
 import { useState } from "react";
-
 import Loader from "./Loader";
 import { Link } from "react-router-dom";
+import { useWishList } from "../hooks/useWishList";
+import { useModalMenu } from "../hooks/useModalMenu";
+import { useContext } from "react";
+import CartContext from "../context/CartContext.jsx";
 
-const Product = ({
-  image,
-  category,
-  id,
-  alt,
-  tittle,
-  price,
-  stock,
-  modal,
-  addToCart,
-  setIsOpen,
-  onQualityTotal,
-  addToWishList,
-  wishList,
-}) => {
+const Product = ({ image, category, id, alt, title, price, stock, modal }) => {
+  const { addToCart, onQualityTotal } = useContext(CartContext);
+  const { wishList, addToWishList } = useWishList();
+  const { setIsOpen } = useModalMenu();
   const [value, setValue] = useState(1);
   const [add, setAdd] = useState(false);
   const [addSaveProduct, setAddSaveProduct] = useState(false);
-  const isProductInWishList = wishList.find((item) => item.tittle === tittle);
-  console.log(wishList);
+  const isProductInWishList = wishList.find((item) => item.title === title);
 
   const handleMax = () => {
     let newValue = value > stock ? value : value + 1;
@@ -43,8 +34,7 @@ const Product = ({
     if (value < stock) {
       setAdd(true);
       onQualityTotal(value);
-      addToCart({ image, category, alt, tittle, price, value, id, stock });
-      //console.log(addToCart);
+      addToCart({ image, category, alt, title, price, value, id, stock });
       setTimeout(() => setAdd(false), 500);
       setIsOpen(true);
     }
@@ -53,7 +43,7 @@ const Product = ({
   const handleSaveProduct = () => {
     if (stock > 0) {
       setAddSaveProduct(true);
-      addToWishList({ image, category, alt, tittle, price, value, id, stock });
+      addToWishList({ image, category, alt, title, price, value, id, stock });
       setTimeout(() => setAddSaveProduct(false), 500);
     }
   };
@@ -96,7 +86,7 @@ const Product = ({
                   : "text-white text-4xl text-left"
               }
             >
-              {tittle}
+              {title}
             </h2>
 
             {/*Precio*/}
@@ -109,7 +99,10 @@ const Product = ({
             {stock > 0 ? (
               <div className="flex items-center gap-2">
                 <div className="rounded-full bg-green-500 w-2 h-2"></div>
-                <p>In Stock: {stock}</p>
+                <p>
+                  In Stock: {stock}
+                  {id}
+                </p>
               </div>
             ) : (
               <div className="flex items-center gap-2">
@@ -177,7 +170,7 @@ const Product = ({
                   <Loader />
                 ) : (
                   <div className="flex items-center gap-1">
-                    <span class="icon-[mdi--heart]"></span>
+                    <span className="icon-[mdi--heart]"></span>
                     <p>Added to Wishlist</p>
                   </div>
                 )}
@@ -197,7 +190,7 @@ const Product = ({
                 <Loader />
               ) : (
                 <div className="flex items-center gap-1">
-                  <span class="icon-[bi--heart]"></span>
+                  <span className="icon-[bi--heart]"></span>
                   <p>Add to Wishlist</p>
                 </div>
               )}

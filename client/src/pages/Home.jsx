@@ -1,5 +1,3 @@
-import Header from "../components/Header";
-import Principal from "../components/Principal";
 import Banner from "../components/Banner";
 import Button from "../components/Button";
 import BestSellers from "../components/BestSellers";
@@ -10,39 +8,10 @@ import Contact from "../components/Contact";
 import "../css/App.css";
 import { useIntl } from "react-intl";
 
-const Home = ({
-  addToCart,
-  addToWishList,
-  wishList,
-  cartItems,
-  isOpen,
-  setIsOpen,
-  toggleMenu,
-  toggleMenuCart,
-  setIsOpenCart,
-  isOpenCart,
-  onQualityTotal,
-  qualityTotal,
-}) => {
+const Home = () => {
   const intl = useIntl();
   return (
     <>
-      <div className="bg-[url('/public/backgroundmovil.png')] md:bg-[url('/public/banner.png')] bg-cover h-full md:h-screen flex flex-col">
-        <Header
-          p="p-4"
-          mp="md:p-10"
-          cartItems={cartItems}
-          isOpen={isOpen}
-          setIsOpen={setIsOpen}
-          toggleMenu={toggleMenu}
-          isOpenCart={isOpenCart}
-          setIsOpenCart={setIsOpenCart}
-          toggleMenuCart={toggleMenuCart}
-          qualityTotal={qualityTotal}
-        />
-
-        <Principal />
-      </div>
       <Banner
         text={intl.formatMessage({ id: "banner.title" })}
         subtext={intl.formatMessage({ id: "banner.subtitle" })}
@@ -57,11 +26,6 @@ const Home = ({
       </Banner>
 
       <BestSellers
-        addToWishList={addToWishList}
-        wishList={wishList}
-        addToCart={addToCart}
-        setIsOpen={setIsOpen}
-        onQualityTotal={onQualityTotal}
         button={
           <Button
             description={intl.formatMessage({ id: "button.shop" })}

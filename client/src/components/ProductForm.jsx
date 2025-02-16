@@ -1,17 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import Header from "./Header";
 
-const ProductForm = ({
-  cartItems,
-  isOpen,
-  setIsOpen,
-  toggleMenu,
-  isOpenCart,
-  setIsOpenCart,
-  toggleMenuCart,
-  qualityTotal,
-}) => {
+const ProductForm = () => {
   const [product, setProduct] = useState({
     plate_pd: "",
     price_pd: null,
@@ -115,18 +105,6 @@ const ProductForm = ({
 
   return (
     <>
-      <Header
-        bg="bg-[#FF5C14]"
-        p="p-2"
-        cartItems={cartItems}
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-        toggleMenu={toggleMenu}
-        isOpenCart={isOpenCart}
-        setIsOpenCart={setIsOpenCart}
-        toggleMenuCart={toggleMenuCart}
-        qualityTotal={qualityTotal}
-      />
       <div className="flex flex-col justify-center items-center p-10">
         <h1 className="p-4">{editing ? "Edit Product" : "Create Product"}</h1>
         <div style={{ color: "black" }}>

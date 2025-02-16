@@ -4,21 +4,7 @@ import Product from "./Product";
 import { Link } from "react-router-dom";
 import { useModal } from "../hooks/useModal";
 
-function Card({
-  ProductList,
-  tittle,
-  id,
-  price,
-  stock,
-  image,
-  alt,
-  style,
-  addToCart,
-  addToWishList,
-  wishList,
-  setIsOpen,
-  onQualityTotal,
-}) {
+function Card({ title, id, price, stock, image, alt, style }) {
   const [showButton, setShowButton] = useState(false);
   const [isOpenModal, openModal, closeModal] = useModal(false);
 
@@ -45,7 +31,11 @@ function Card({
 						${showButton && "transition-opacity duration-500 group "}`}
               style={style}
             >
-              <img src={image} alt={alt} className=" w-60 max-h-32" />
+              <img
+                src={`http://localhost:4000/${image}`}
+                alt={alt}
+                className=" w-60 max-h-32"
+              />
               {showButton && (
                 <button
                   className="flex absolute
@@ -62,7 +52,7 @@ function Card({
                 className="product-tittle lg:text-xl p-2 font-arco"
                 to={`/product/${id}`}
               >
-                {tittle}
+                {title}
               </Link>
               <p className="product-price">${price}</p>
             </div>
@@ -72,18 +62,12 @@ function Card({
       <Modal isOpen={isOpenModal} closeModal={closeModal}>
         <div className="">
           <Product
-            ProductList={ProductList}
-            tittle={tittle}
+            title={title}
             price={price}
             stock={stock}
-            image={image}
+            image={`http://localhost:4000/${image}`}
             alt={alt}
             id={id}
-            onQualityTotal={onQualityTotal}
-            addToCart={addToCart}
-            addToWishList={addToWishList}
-            wishList={wishList}
-            setIsOpen={setIsOpen}
             modal
           />
         </div>

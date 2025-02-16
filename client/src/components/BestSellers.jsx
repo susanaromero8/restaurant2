@@ -1,18 +1,13 @@
 import { useIntl } from "react-intl";
 import Card from "./Card";
-import ProductList from "./Products";
+import { useLoadProduct } from "../hooks/useLoadProduct";
 
-function BestSellers({
-  button,
-  addToCart,
-  addToWishList,
-  wishList,
-  setIsOpen,
-  onQualityTotal,
-}) {
+function BestSellers({ button }) {
   const intl = useIntl();
-  const bestSeller = ProductList.filter(
-    (item) => item.category === "best-seller"
+  const { productList } = useLoadProduct();
+
+  const bestSeller = productList.filter(
+    (item) => item.category_name === "best-seller"
   );
 
   return (
@@ -30,19 +25,14 @@ function BestSellers({
           <div className="card-contain flex justify-around flex-wrap">
             {bestSeller.slice(0, 3).map((product) => (
               <Card
-                ProductList={ProductList}
-                tittle={product.plate}
+                key={product.id}
+                title={product.plate_pd}
                 id={product.id}
-                price={product.price}
-                stock={product.stock}
-                image={product.imageUrl}
-                alt={product.alt}
+                price={product.price_pd}
+                stock={product.stock_pd}
+                image={product.img_pd}
+                alt={product.alt_pd}
                 style={{ backgroundColor: "#008BBF" }}
-                addToCart={addToCart}
-                addToWishList={addToWishList}
-                wishList={wishList}
-                setIsOpen={setIsOpen}
-                onQualityTotal={onQualityTotal}
               />
             ))}
           </div>

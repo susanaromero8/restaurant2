@@ -1,35 +1,10 @@
 import Card from "../components/Card";
-import Header from "../components/Header";
+import { useWishList } from "../hooks/useWishList";
 
-const WishListPage = ({
-  wishList,
-  cartItems,
-  isOpen,
-  setIsOpen,
-  toggleMenu,
-  isOpenCart,
-  setIsOpenCart,
-  toggleMenuCart,
-  qualityTotal,
-  addToCart,
-  addToWishList,
-  onQualityTotal,
-}) => {
-  console.log(wishList);
+const WishListPage = () => {
+  const { wishList } = useWishList();
   return (
     <>
-      <Header
-        bg="bg-[#FF5C14]"
-        p="p-2"
-        cartItems={cartItems}
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-        toggleMenu={toggleMenu}
-        isOpenCart={isOpenCart}
-        setIsOpenCart={setIsOpenCart}
-        toggleMenuCart={toggleMenuCart}
-        qualityTotal={qualityTotal}
-      />
       <div className="tittle-contain text-center m-10 lg:m-20">
         <h1 className="text-center md:text-4xl text-3xl font-bold lg:m-6">
           WishList
@@ -44,11 +19,6 @@ const WishListPage = ({
               alt={product.tittle}
               id={product.id}
               style={{ backgroundColor: "#008BBF" }}
-              addToCart={addToCart}
-              addToWishList={addToWishList}
-              wishList={wishList}
-              setIsOpen={setIsOpen}
-              onQualityTotal={onQualityTotal}
             />
           ))}
         </div>

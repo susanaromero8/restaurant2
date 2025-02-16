@@ -4,11 +4,15 @@ import { Link } from "react-router-dom";
 import Button from "./Button";
 import { useIntl } from "react-intl";
 import LanguageContext from "./LanguageContext";
+import { useModalMenu } from "../hooks/useModalMenu";
+import CartContext from "../context/CartContext";
 
-function Nav({ cartItems, isOpenCart, toggleMenuCart }) {
+function Nav() {
   const intl = useIntl();
   const { changeLanguage, language, handleButtonLanguage, openButtonLanguage } =
     useContext(LanguageContext);
+  const { cartItems } = useContext(CartContext);
+  const { toggleMenuCart, isOpenCart } = useModalMenu();
 
   const total = cartItems.reduce(
     (accumulator, item) => accumulator + parseInt(item.value),
@@ -89,12 +93,12 @@ function Nav({ cartItems, isOpenCart, toggleMenuCart }) {
                       >
                         <img
                           src={item.image}
-                          alt={item.tittle}
+                          alt={item.title}
                           className=" w-32  h-auto"
                         />
                         <div className="flex flex-col gap-1">
                           <Link to={`/product/${item.id}`}>
-                            <h2>{item.tittle}</h2>
+                            <h2>{item.title}</h2>
                           </Link>
                           <p className="product-price text-lg">{item.price}</p>
                           <p>Quantity: {item.value}</p>
@@ -139,9 +143,9 @@ function Nav({ cartItems, isOpenCart, toggleMenuCart }) {
                         font-bold rounded-lg w-20 h-12 cursor-pointer flex items-center justify-center gap-2"
             >
               {language === "en" ? (
-                <span class="icon-[flagpack--us]"></span>
+                <span className="icon-[flagpack--us]"></span>
               ) : (
-                <span class="icon-[flagpack--ve]"></span>
+                <span className="icon-[flagpack--ve]"></span>
               )}
               <p>{intl.formatMessage({ id: "app.button" })}</p>
             </button>
@@ -154,9 +158,9 @@ function Nav({ cartItems, isOpenCart, toggleMenuCart }) {
                         font-bold rounded-lg w-20 h-12 cursor-pointer flex items-center justify-center gap-2"
               >
                 {language === "en" ? (
-                  <span class="icon-[flagpack--ve]"></span>
+                  <span className="icon-[flagpack--ve]"></span>
                 ) : (
-                  <span class="icon-[flagpack--us]"></span>
+                  <span className="icon-[flagpack--us]"></span>
                 )}
                 {language === "en" ? <p>ES</p> : <p>US</p>}
               </button>
